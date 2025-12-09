@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Yajra\DataTables\DataTables;
 
 
@@ -24,32 +25,54 @@ class ProducttController extends Controller
     public function StoreProduct(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:50|unique:products',
+            'name_en' => 'required|max:50|unique:products',
+            'name_ar' => 'required|max:50',
             'price' => 'required|numeric',
             'quantity' => 'required|integer',
-            'imagpath' => 'required|image|mimes:png,jpg,gif,jpeg|max:2048',
+            'imagepath' => 'required|image|mimes:png,jpg,gif,jpeg|max:2048',
+            'description' => 'required',
+            'cat_id' => 'required|exists:categories,id'
         ]);
 
         $newproduct = new Product();
-        $newproduct->name = $request->name;
+        $newproduct->name_en = $request->name_en;
+        $newproduct->name_ar = $request->name_ar;
         $newproduct->price = $request->price;
         $newproduct->quantity = $request->quantity;
         $newproduct->description = $request->description;
         $newproduct->cat_id = $request->cat_id;
 
-        // ✅ رفع الصورة وحفظها باسم unique
-        if ($request->hasFile('imagpath')) {
+        // correct image upload
+        if ($request->hasFile('imagepath')) {
 
-            $imageName = time() . '.' . $request->imagpath->extension();
-            $request->imagpath->move(public_path('assets/img'), $imageName);
-            // ✅ حفظ المسار في قاعدة البيانات
-            $newproduct->imagpath = 'assets/img/' . $imageName;
+            $imageName = time() . '.' . $request->imagepath->extension();
+            $request->imagepath->move(public_path('asset/img'), $imageName);
+
+            $newproduct->imagepath = 'asset/img/' . $imageName;
         }
 
         $newproduct->save();
 
         return redirect('/shop')->with('success', 'Product added successfully!');
     }
+
+
+
+    ////////admin functions
+    public function showCreateForm()
+    {
+        $products = Product::all();
+        return view('admin.products.add', compact('products'));
+    }
+    public function create()
+    {
+        $user = Auth::user();
+        $allcategories = Category::all();
+        return view('admin.products.add', compact('allcategories'));
+    }
+
+
+
 
 
     # حذف منتج
@@ -85,25 +108,27 @@ class ProducttController extends Controller
         if (!$product) {
             return redirect('/shop')->with('error', 'Product not found');
         }
-
         $request->validate([
-            'name'     => 'required|max:50',
-            'price'    => 'required|numeric',
+            'name_en' => 'required|max:50',
+            'name_ar' => 'required|max:50',
+            'price' => 'required|numeric',
             'quantity' => 'required|integer',
         ]);
 
         $product->update([
-            'name'        => $request->name,
-            'price'       => $request->price,
-            'quantity'    => $request->quantity,
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
             'description' => $request->description,
-            'cat_id'      => $request->cat_id,
+            'cat_id' => $request->cat_id,
         ]);
 
-        if ($request->hasFile('imagpath')) {
-            $imageName = time() . '.' . $request->imagpath->extension();
-            $request->imagpath->move(public_path('assets/img'), $imageName);
-            $product->imagpath = 'assets/img/' . $imageName;
+
+        if ($request->hasFile('imagepath')) {
+            $imageName = time() . '.' . $request->imagepath->extension();
+            $request->imagepath->move(public_path('asset/img'), $imageName);
+            $product->imagepath = 'asset/img/' . $imageName;
             $product->save();
         }
 
@@ -127,18 +152,29 @@ class ProducttController extends Controller
         return redirect('/shop')->with('success', 'Review submitted!');
     }
 
-    # البحث
     public function search(Request $request)
     {
         $key = $request->input('searchkey');
-        $products = Product::where('name', 'LIKE', "%{$key}%")->paginate(4);
+        $products = Product::where('name_en', 'LIKE', "%{$key}%")
+            ->orWhere('name_ar', 'LIKE', "%{$key}%")
+            ->paginate(4);
 
         return view('layouts.search', compact('products'));
     }
+
 
     public function productsTable()
     {
         $products = Product::all(); // ✅ send all rows
         return view('layouts.products.productstable', ['products' => $products]);
+    }
+
+    ////admin
+    public function index()
+    {
+        $products = Product::all();
+        return view('admin.products.index', [
+            'products' => $products
+        ]);
     }
 }

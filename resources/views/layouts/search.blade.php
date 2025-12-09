@@ -33,7 +33,7 @@
             @foreach($products as $product)
                 <div class="col-md-4">
                     <div class="card shadow-sm border-0">
-                        <img src="{{ asset($product->imagpath) }}"
+                        <img src="{{ asset($product->imagepath) }}"
                         class="card-img-top"
                         style="height: 250px;width: 250px; object-fit: cover;"
                         alt="{{ $product->name }}">

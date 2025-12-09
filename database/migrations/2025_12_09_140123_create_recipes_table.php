@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->id();
-            $table->text("name");
-            $table->text("phone");
-            $table->text("email");
-            $table->text("subject");
-            $table->text("message");
-            $table->text("imagepath");
+            $table->string('title');
+            $table->string('image')->nullable();
+            $table->string('time');
+            $table->string('difficulty');
+            $table->string('calories');
+            $table->json('ingredients');
+            $table->json('steps');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('recipes');
     }
 };

@@ -75,7 +75,7 @@
                                 <tr>
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <img src="{{ asset($cart->product->imagpath ?? 'assets/img/default.png') }}"
+                                            <img src="{{ asset($cart->product->imagepath ?? 'assets/img/default.png') }}"
                                                  alt="{{ $cart->product->name }}">
                                             <div class="ms-3">
                                                 <h6 class="mb-0">{{ $cart->product->name }}</h6>

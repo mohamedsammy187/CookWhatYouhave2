@@ -49,13 +49,15 @@
                     <div class="card h-100 shadow-sm border-0">
                         <!-- Product Image -->
                         <a href="{{ route('shop.detail', $item->id) }}">
-                            <img src="{{ asset($item->imagpath) }}" class="card-img-top rounded-top"
+                            <img src="{{ asset($item->imagepath) }}" class="card-img-top rounded-top"
                                 style="width: 100%; height: 250px; object-fit: cover;" alt="{{ $item->name }}">
                         </a>
 
                         <!-- Product Details -->
                         <div class="card-body text-center">
-                            <h5 class="card-title fw-bold">{{ $item->name }}</h5>
+                            <h4 class="card-title fw-bold">{{ $item->name_en }}</h4>
+                            {{-- <h5 class="card-title fw-bold">{{ $item->name_ar  }}</h5> --}}
+                            {{-- <h5 class="card-title fw-bold">{{ $item->name }}</h5> --}}
                             <p class="text-muted mb-2">{{ Str::limit($item->description, 60) }}</p>
                             <p class="fw-bold text-success mb-3">${{ $item->price }}</p>
 

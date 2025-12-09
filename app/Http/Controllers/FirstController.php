@@ -16,6 +16,10 @@ class FirstController extends Controller
     {
         return view('layouts/master');
     }
+     public function home()
+    {
+        return view('layouts/home');
+    }
 
 
     public function CookWhatYouHave()
@@ -81,8 +85,8 @@ class FirstController extends Controller
     // صفحة الكاتيجوريز
     public function GetCatProducts()
     {
-          $categories = Category::all();
-            $products   = Product::all();
+        $categories = Category::all();
+        $products   = Product::all();
 
         // if (Auth::check()) {
         //     $categories = Category::all();
@@ -127,5 +131,10 @@ class FirstController extends Controller
 
         // ابعته للـ Blade
         return view('review', compact('reviews'));
+    }
+    public function counter(){
+        return view('livewire.counter');
+
+
     }
 }

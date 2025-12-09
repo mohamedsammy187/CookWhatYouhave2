@@ -32,7 +32,7 @@
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Action</th>
-                        <th>imagpath</th>
+                        <th>imagepath</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                             </td>
 
                             <td>
-                                <img src='{{ $product->imagpath }}' width="30" height="30">
+                                <img src='{{ $product->imagepath }}' width="30" height="30">
                             </td>
                         </tr>
                     @endforeach

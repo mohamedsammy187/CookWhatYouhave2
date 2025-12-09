@@ -11,10 +11,10 @@
             <div class="border border-primary rounded position-relative vesitable-item">
                 <div class="ph">
                     <a href="{{ route('shop', $item->id) }}">
-                        <img src="{{ url($item->imagepath) }}"
+                        <img src="{{    ($item->imagepath) }}"
                              class="img-fluid w-100 rounded-top"
                              style="width: 250px; height: 250px; object-fit: cover;"
-                             alt="{{ $item->name }}">
+                             alt="{{ $item->name_en }}">
                     </a>
                 </div>
                 <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">

@@ -26,7 +26,9 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
+
     <style>
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f9fafb;
@@ -38,7 +40,7 @@
             font-weight: 600;
             transition: 0.3s;
         }
-        .navbar .nav-link:hover { 
+        .navbar .nav-link:hover {
             color: #198754 !important;
         }
         footer {
@@ -65,6 +67,8 @@
     </style>
 
     @stack('styles')
+    <title>Test Counter</title>
+
 </head>
 
 <body>
@@ -170,6 +174,7 @@
 
     {{-- Hero Section (افتراضي) --}}
     @section('hero')
+    @yield('hero')
     <div class="hero d-flex align-items-center" style="background: url('{{ asset('img/hero-food.jpg') }}') center/cover no-repeat; height:90vh;">
         <div class="container text-center hero-overlay d-flex flex-column justify-content-center" style="background: rgba(0,0,0,0.5); height:100%;">
             <h1 class="text-white">Cook Smarter, Not Harder</h1>
@@ -274,5 +279,7 @@
     <script src="{{ asset('js/main.js') }}"></script>
 
     @stack('scripts')
+
+
 </body>
 </html>
